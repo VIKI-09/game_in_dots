@@ -1,21 +1,23 @@
-import React from 'react';
+import React,{Fragment} from 'react';
 import '../App.css';
 import Cell from './Cell'
+import Grid from '@material-ui/core/Grid';
 
 export default function Playfield(props){
     const rowCount = 10;
   const colCount = 10;
   return (
-    <div >
+    <Grid container
+          justify='center'>
       {[...new Array(rowCount)].map((x, rowIndex) => {
         return (
-          <div className="playfied-row" key={rowIndex}>
+          <Grid item className="playfied-row" key={rowIndex}>
             {[...new Array(colCount)].map((y, colIndex) => <Cell key={colIndex} val={rowIndex*colCount + colIndex} onChange={props.cellClick} />  )}
-          </div>
+          </Grid>
         )
       })
       }
-    </div>
+    </Grid>
   );
 }
 

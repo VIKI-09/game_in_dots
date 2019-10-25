@@ -1,4 +1,5 @@
 .playfied-row:after {
+  justify: center;
   clear: both;
   content: "";
   display: table;
