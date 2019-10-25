@@ -8,15 +8,18 @@ export default function Playfield(props){
   const colCount = 10;
   return (
     <Grid container
-          justify='center'>
+      justify='center'
+    >
+
       {[...new Array(rowCount)].map((x, rowIndex) => {
         return (
           <Grid item className="playfied-row" key={rowIndex}>
-            {[...new Array(colCount)].map((y, colIndex) => <Cell key={colIndex} val={rowIndex*colCount + colIndex} onChange={props.cellClick} />  )}
+            {[...new Array(colCount)].map((y, colIndex) => <Cell key={colIndex} id={rowIndex*colCount + colIndex} onChange={props.cellClick} />  )}
           </Grid>
         )
       })
       }
+
     </Grid>
   );
 }

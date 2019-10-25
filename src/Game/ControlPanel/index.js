@@ -2,10 +2,13 @@ import React from 'react';
 import PlayButton from './PlayButton';
 import UserNameForm from './UserNameForm';
 import DifficultyMenu from './DifficultyMenu';
-import Paper from '@material-ui/core/Paper'
+import Paper from '@material-ui/core/Paper';
+import FormGroup from '@material-ui/core/FormGroup';
 export default props =>
-  <Paper>
-    <UserNameForm />
-    <DifficultyMenu />
-    <PlayButton />
-  </Paper>
+  // <Paper>
+      <FormGroup row>
+        <UserNameForm />
+        <DifficultyMenu />
+        <PlayButton />
+     </FormGroup>
+  // </Paper>
