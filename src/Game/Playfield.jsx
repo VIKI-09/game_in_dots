@@ -3,8 +3,8 @@ import '../App.css';
 import Cell from './Cell'
 
 export default function Playfield(props){
-  const rowCount = 5;
-  const colCount = 5;
+    const rowCount = 10;
+  const colCount = 10;
   return (
     <div >
       {[...new Array(rowCount)].map((x, rowIndex) => {
