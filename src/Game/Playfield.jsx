@@ -7,9 +7,7 @@ export default function Playfield(props){
     const rowCount = 10;
   const colCount = 10;
   return (
-    <Grid container
-      justify='center'
-    >
+    <Fragment>
 
       {[...new Array(rowCount)].map((x, rowIndex) => {
         return (
@@ -20,7 +18,7 @@ export default function Playfield(props){
       })
       }
 
-    </Grid>
+    </Fragment>
   );
 }
 

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 // import Paper from '@material-ui/core/Paper';
 import ControlPanel from './ControlPanel';
 import Playfield from './Playfield';
-import WinnersTable from './WinnersTable';
+import WinnersList from './WinnersList';
 import axios from 'axios';
 
 const API_URL = 'http://starnavi-frontend-test-task.herokuapp.com';
@@ -18,7 +18,8 @@ function clickedCell(i){
 
 
 export default props =>{
-  const [gameModePresets, setGameModePreset] = useState({})
+  const [gameModePresets, setGameModePreset] = useState({});
+  const [winners, setWinnersList] = useState([]);
 
   useEffect(() => {
     axios.get(`${API_URL}/game-settings`)
@@ -29,6 +30,13 @@ export default props =>{
       // setLoading(false);
     })
   }, []);
+  useEffect(() => {
+    axios.get(`${API_URL}/winners`)
+    .then(res => {
+      const winnersData = res.data;
+      setWinnersList(winnersData);
+    })
+  }, []);
 
 
   return (<Grid container>
@@ -36,12 +44,12 @@ export default props =>{
         <Grid item xs={12}>
           <ControlPanel />
         </Grid >
-        <Grid item xs={12}>
+        <Grid item xs={12}  zeroMinWidth={true}>
           <Playfield cellClick={clickedCell}/>
         </Grid >
       </Grid>
       <Grid item sm>
-        <WinnersTable />
+        <WinnersList winners={winners} />
       </Grid>
     </Grid>)
 }

@@ -8,11 +8,12 @@ export default props => {
     <form>
     <TextField
        id="outlined-with-placeholder"
-       label="With placeholder"
+       label="Enter Your Name"
        placeholder="Enter Your Name"
        // className={classes.textField}
-       margin="normal"
+       margin="dense"
        variant="outlined"
+
      />
      </form>
   )

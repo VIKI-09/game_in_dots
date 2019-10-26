@@ -41,7 +41,7 @@ export default props => {
    return(
      <FormControl variant="outlined" className={classes.formControl}>
       <InputLabel ref={inputLabel} htmlFor="outlined-age-native-simple">
-        Pick Game Mode
+        Game Mode
       </InputLabel>
       <Select
         native
