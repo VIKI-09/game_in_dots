@@ -5,6 +5,6 @@ export default props => {
   return(
   <List>
       {props.winners.map((winner) => <WinnerItem key={winner.id} winnerName={winner.winner} date={winner.date} />  )}
-  </List>
+  </List> 
   )
 }

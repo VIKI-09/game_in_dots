@@ -1,5 +1,5 @@
 import React from 'react';
-import '../App.css';
+import './Cell.css';
 
 
 export default function Cell(props) {

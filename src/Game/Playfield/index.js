@@ -1,9 +1,9 @@
 import React,{Fragment} from 'react';
-import '../App.css';
+import './Cell.css';
 import Cell from './Cell'
 import Grid from '@material-ui/core/Grid';
 
-export default function Playfield(props){
+export default props => {
     const rowCount = 10;
   const colCount = 10;
   return (
