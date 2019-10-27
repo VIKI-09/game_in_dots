@@ -12,24 +12,17 @@ const API_URL = 'http://starnavi-frontend-test-task.herokuapp.com';
 
 
 
-function clickedCell(i){
-  console.log('yeah!')
-}
 
 
 export default props =>{
-  const [gameModePresets, setGameModePreset] = useState({});
+  const [state, setState] = useState({
+   currentGameMode: { field: 15, delay: 1000},
+   isPlaying: false,
+   winner:''
+ });
   const [winners, setWinnersList] = useState([]);
+  const [userName, setUserName] = useState('');
 
-  useEffect(() => {
-    axios.get(`${API_URL}/game-settings`)
-    .then(res => {
-      const data = res.data;
-      console.log(data)
-      // setGameMode(data);
-      // setLoading(false);
-    })
-  }, []);
   useEffect(() => {
     axios.get(`${API_URL}/winners`)
     .then(res => {
@@ -37,15 +30,22 @@ export default props =>{
       setWinnersList(winnersData);
     })
   }, []);
+  function setUser(name){
+    setUserName(name);
+  }
+
+
 
 
   return (<Grid container>
       <Grid item sm>
         <Grid item xs={12}>
-          <ControlPanel />
+        <ControlPanel userName={setUser} gameModePresets={props.gameModePresets} />
+        {state.winner ? <span>{state.winner}</span>: null}
+
         </Grid >
-        <Grid item xs={12}  zeroMinWidth={true}>
-          <Playfield cellClick={clickedCell}/>
+        <Grid item xs={12}  >
+          <Playfield />
         </Grid >
       </Grid>
       <Grid item sm>

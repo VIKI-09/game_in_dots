@@ -8,7 +8,7 @@ export default function Header() {
 
      <AppBar position="static">
        <Toolbar variant="dense">
-         <Typography variant="h1" color="inherit">
+         <Typography  align='center' variant="h1" color="inherit">
            Game In Dots
          </Typography>
        </Toolbar>

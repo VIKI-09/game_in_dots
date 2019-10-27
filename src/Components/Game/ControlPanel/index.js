@@ -7,8 +7,8 @@ import FormGroup from '@material-ui/core/FormGroup';
 export default props =>
   // <Paper>
       <FormGroup row>
-        <UserNameForm />
-        <DifficultyMenu />
+        <UserNameForm setName={props.userName} />
+        <DifficultyMenu modes={props.gameModePresets}  />
         <PlayButton />
      </FormGroup>
   // </Paper>
