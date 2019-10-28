@@ -16,7 +16,8 @@ const API_URL = 'http://starnavi-frontend-test-task.herokuapp.com';
 
 export default props =>{
   const [state, setState] = useState({
-   currentGameMode: { field: 15, delay: 1000},
+    field: 3,
+    delay: 5000,
    isPlaying: false,
    winner:''
  });
@@ -34,22 +35,32 @@ export default props =>{
     setUserName(name);
   }
 
-
-
+  function handleClick(){
+    setState({
+      field: 3,
+      delay: 5000,
+     isPlaying: true,
+     winner:''})
+  }
 
   return (<Grid container>
       <Grid item sm>
+      <div style={{margin: '50px 20px 50px 100px'}}>
         <Grid item xs={12}>
-        <ControlPanel userName={setUser} gameModePresets={props.gameModePresets} />
+
+        <ControlPanel onToggle={handleClick} userName={setUser} gameModePresets={props.gameModePresets} />
         {state.winner ? <span>{state.winner}</span>: null}
 
         </Grid >
         <Grid item xs={12}  >
-          <Playfield />
+            <Playfield status={state.isPlaying} field={state.field} delay={state.delay} />
         </Grid >
+        </div>
       </Grid>
       <Grid item sm>
-        <WinnersList winners={winners} />
+      <div style={{margin: '50px'}} >
+        <WinnersList style={{margin: '50px'}} winners={winners} />
+      </div>
       </Grid>
     </Grid>)
 }

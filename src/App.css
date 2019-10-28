@@ -3,6 +3,7 @@
   clear: both;
   content: "";
   display: table;
+  min-width: 675px
 }
 .cell-def {
   background: #ccc;
