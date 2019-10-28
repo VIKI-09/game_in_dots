@@ -23,29 +23,21 @@ export default props => {
   function activator(arr, delay){
 
 
-      const index = getRandomCellIndex(arr)
+  let timerId = setTimeout(function go() {
+    const index = getRandomCellIndex(arr)
 
-      const cells = state.cells.slice();
-      console.log(cells);
-      cells[index] = '1';
-      console.log(cells);
-      setState({cells: cells});
+       const cells = state.cells.slice();
+       console.log(cells);
+       cells[index] = '1';
+       console.log(cells);
+       setState({cells: cells});
+       timerId =  setTimeout( go, delay )
+  }, delay)
 
 
+}
 
-      const timerId = setTimeout(() =>{ const cells = state.cells.slice();
-      setTimer(timerId)
-      if(state.cells[index] === '1'){
-        cells[index] = '3';
-        setState({cells: cells});
-
-      }
-    },delay)
-  }
-
-  if(props.state){
-    props.state = false;
-    console.log('START GAME!!!', Date.now());
+  if(props.status){
     activator(state.cells, props.delay);
   }
 
@@ -58,6 +50,8 @@ export default props => {
       cells[i] = '2';
       setState({cells: cells});
     }
+
+
 
   return (
     <Fragment>
