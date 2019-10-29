@@ -53,7 +53,7 @@ export default props =>{
 
         </Grid >
         <Grid item xs={12}  >
-            <Playfield isPlaying={false} gameData={{field: 3, delay: 2000}} />
+            <Playfield isPlaying={false} gameData={{field: 3, delay: 3000}} />
         </Grid >
         </div>
       </Grid>
