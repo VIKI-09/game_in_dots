@@ -5,17 +5,17 @@ import './Cell.css';
 export default function Cell(props) {
   const {onClick, value} = props;
   const classes = ['cell-def'];
-  if(value ==='2'){
+  if(value ==='green'){
     classes.push('clicked-cell')
-  }else if(value ==='3'){
+  }else if(value ==='red'){
     classes.push('failed-cell')
-  }else if(value === '1'){
+  }else if(value === 'active'){
     classes.push('active-cell')
   }
 
   return (
     <div
-      onClick={ value === '1'? onClick : null}
+      onClick={ value === 'default'? onClick : null}
       className={classes.join(' ')}
     >
     </div>
