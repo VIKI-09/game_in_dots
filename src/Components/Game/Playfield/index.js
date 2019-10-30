@@ -8,7 +8,7 @@ export default class extends Component  {
     super(props);
 console.log(props.status);
 
-    if(true){
+    if(false){
 
       console.log('START_________________________-');
       setTimeout(() =>this.cellActivator(this.props.gameData.delay),this.props.gameData.delay)
@@ -68,13 +68,14 @@ console.log(props.status);
    cellActivator(delay){
      // setTimeout(()=> {
 
-        let currentCell = this.getRandomCell(this.state.playfieldData, this.props.gameData.field);
+        let currentCell =  this.getRandomCell(this.state.playfieldData, this.props.gameData.field);
+
         console.log('------------INDEX OF CURRENT CELL-' + currentCell)
         let timerId = setTimeout(()=>{
           if(this.state.playfieldData[currentCell[0]][currentCell[1]].value === 'green'){
             console.log('проверка на GREEEN' );
-            // clearTimeout(timerId);
-            this.cellActivator(delay);
+            clearTimeout(timerId);
+            setTimeout (()=>this.cellActivator(delay),0 );
 
           }else{
             let updData = this.state.playfieldData;
@@ -102,7 +103,9 @@ console.log(props.status);
       this.setState({playfieldData: updData})
       return [randomX, randomY];
     }else {
-        this.getRandomCell(data, field)
+      console.log('____ПОПАДАНИЕ НА ОТМЕЧЕНУЮ КЛЕТКУ____');
+        let anotherCell = this.getRandomCell(data, field);
+      return anotherCell
       }
     }
 
