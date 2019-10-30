@@ -12,12 +12,11 @@ export default props =>{
   const [state, setState] = useState({
     field: 15,
     delay: 5000,
-   isPlaying: false,
-   winner:''
+    isPlaying: false,
+    winner:''
  });
   const [winners, setWinnersList] = useState([]);
   const [userName, setUserName] = useState('');
-
   useEffect(() => {
     axios.get(`${API_URL}/winners`)
     .then(res => {
@@ -28,6 +27,12 @@ export default props =>{
   function setUser(name){
     setUserName(name);
   }
+  useEffect(()=>{    axios.get(`${API_URL}/game-settings`)
+      .then(res => {
+        const gameModePresets = res.data;
+        // setLoading(false);
+      })
+    }, [])
 
   function handleClick(){
     let newState = state;
@@ -52,7 +57,7 @@ export default props =>{
                 <Grid item xs={12} >
                   {true? (
                       <div style={{margin:'10px', minWidth: '675px', alignItems: 'center', justifyContent:'center', display:'flex'}}>
-                          <Playfield  gameData={{field: 15 , delay: 900}} />
+                          <Playfield  gameData={{field: 10 , delay: 900}} />
                       </div>): null}
                 </Grid >
           </Grid>
