@@ -11,20 +11,30 @@ const API_URL = 'http://starnavi-frontend-test-task.herokuapp.com';
 
 
 export default class Game extends Component  {
-
-  state = {
-    isLoading: true,
-    playfieldData: this.initPlayfieldData(10),
-    delay: 2000,
-    gameMode:{},
-    userName: null,
-    winner: null,
-    isPlaying: false,
-    scoreCounter: {
-      user: 0,
-      computer: 0
+  constructor(props){
+    super(props)
+    this.state = {
+      isLoading: true,
+      playfieldData: this.initPlayfieldData(10),
+      delay: 2000,
+      gameMode:{},
+      userName: null,
+      winner: null,
+      isPlaying: false,
+      scoreCounter: {
+        user: 0,
+        computer: 0
+      }
     }
-}
+    this.handleStartClick = this.handleStartClick.bind(this);
+    this.handleCellClick = this.handleCellClick.bind(this);
+    // if(true){
+    //
+    // };
+  }
+
+
+
 
 
 
@@ -42,10 +52,11 @@ export default class Game extends Component  {
 }
 
   handleStartClick(){
-  setTimeout(() =>{this.cellActivator(this.state.delay)},this.state.delay)
-  // let updState = this.state;
-  // updState.isPlaying = true;
-  // this.setState(updState);
+console.log('Playing Button Clicked!');
+  let updState = this.state;
+  updState.isPlaying = true;
+  this.setState(updState);
+    setTimeout(() =>this.cellActivator(this.state.delay),this.state.delay)
 
 }
 
@@ -144,7 +155,7 @@ export default class Game extends Component  {
            <Grid container >
                    <Grid item xs={12}>
                    <div style={{margin: '50px', minWidth: '675px', justifyContent:'center'}} >
-                       <ControlPanel apiUrl={API_URL} onToggle={this.handleStartClick.bind(this)} userName={this.setUser}  />
+                       <ControlPanel apiUrl={API_URL} onToggle={this.handleStartClick} userName={this.setUser}  />
                            {this.state.winner ? <span>{this.state.winner}</span>: null}
                      </div>
                    </Grid >
@@ -152,7 +163,7 @@ export default class Game extends Component  {
                    <Grid item xs={12} >
                      {true? (
                          <div style={{margin:'10px', minWidth: '675px', alignItems: 'center', justifyContent:'center', display:'flex'}}>
-                             <Playfield onCkick={this.handleCellCkick.bind(this)}  data={this.state.playfieldData} />
+                             <Playfield onClick={this.handleCellClick}  data={this.state.playfieldData} />
                          </div>): null}
                    </Grid >
              </Grid>
