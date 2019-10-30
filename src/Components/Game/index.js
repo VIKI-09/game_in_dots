@@ -8,15 +8,9 @@ import axios from 'axios';
 
 const API_URL = 'http://starnavi-frontend-test-task.herokuapp.com';
 
-
-
-
-
-
-
 export default props =>{
   const [state, setState] = useState({
-    field: 3,
+    field: 15,
     delay: 5000,
    isPlaying: false,
    winner:''
@@ -41,27 +35,33 @@ export default props =>{
     newState.isPlaying = !state.isPlaying;
     setState(newState)
     console.log(newState);
-    console.log(state);
+    console.log(state.isPlaying);
   }
+// <Grid container direction="column" justify="center" alignItems="center">
+  return (
+<Grid container >
+    <Grid item sm >
+        <Grid container >
+                <Grid item xs={12}>
+                <div style={{margin: '50px', minWidth: '675px', justifyContent:'center'}} >
+                    <ControlPanel onToggle={handleClick} userName={setUser} gameModePresets={props.gameModePresets} />
+                        {state.winner ? <span>{state.winner}</span>: null}
+                  </div>
+                </Grid >
 
-  return (<Grid container>
-      <Grid item sm>
-      <div style={{margin: '50px 20px 50px 100px'}}>
-        <Grid item xs={12}>
+                <Grid item xs={12} >
+                  {true? (
+                      <div style={{margin:'10px', minWidth: '675px', alignItems: 'center', justifyContent:'center', display:'flex'}}>
+                          <Playfield  gameData={{field: 15 , delay: 900}} />
+                      </div>): null}
+                </Grid >
+          </Grid>
+    </Grid >
 
-        <ControlPanel onToggle={handleClick} userName={setUser} gameModePresets={props.gameModePresets} />
-        {state.winner ? <span>{state.winner}</span>: null}
-
-        </Grid >
-        <Grid item xs={12}  >
-            <Playfield status={state.isPlaying} gameData={{field: 5, delay: 3000}} />
-        </Grid >
+    <Grid item sm>
+        <div style={{margin: '50px'}} >
+            <WinnersList  winners={winners} />
         </div>
-      </Grid>
-      <Grid item sm>
-      <div style={{margin: '50px'}} >
-        <WinnersList style={{margin: '50px'}} winners={winners} />
-      </div>
-      </Grid>
-    </Grid>)
+    </Grid>
+</Grid>)
 }

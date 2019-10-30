@@ -41,7 +41,7 @@ console.log(props.status);
   renderPlayfield(data){
      return (
        data.map((datarow) =>
-       <Grid item className='playfield-row' key={data.indexOf(datarow)}>
+       <div  className='playfield-row' key={data.indexOf(datarow)}>
           {
                datarow.map((dataitem) =>
                   <Cell
@@ -51,12 +51,12 @@ console.log(props.status);
                        />
                  )
                }
-               </Grid>
+               </div>
                )
              )
    }
 
-   handleClick(x, y) {
+  handleClick(x, y) {
     let updatedData = this.state.playfieldData;
     updatedData[x][y].value = 'green';
     this.setState(
@@ -64,8 +64,7 @@ console.log(props.status);
     )
      }
 
-
-   cellActivator(delay){
+  cellActivator(delay){
      // setTimeout(()=> {
 
         let currentCell =  this.getRandomCell(this.state.playfieldData, this.props.gameData.field);
@@ -75,14 +74,17 @@ console.log(props.status);
           if(this.state.playfieldData[currentCell[0]][currentCell[1]].value === 'green'){
             console.log('проверка на GREEEN' );
             clearTimeout(timerId);
-            setTimeout (()=>this.cellActivator(delay),0 );
+            console.log(timerId);
+            // setTimeout (()=>this.cellActivator(delay),delay );
 
           }else{
             let updData = this.state.playfieldData;
             updData[currentCell[0]][currentCell[1]].value = 'red';
             this.setState({playfieldData: updData})
-            setTimeout (()=>this.cellActivator(delay), delay);
+            // setTimeout (()=>this.cellActivator(delay), delay);
           }
+          // setTimeout (()=>this.cellActivator(delay), delay)
+          this.cellActivator(delay)
         },delay)
 
       // },delay);
@@ -109,54 +111,13 @@ console.log(props.status);
       }
     }
 
-
-
-
-
-
    render() {
          return (
-             <div>
+             <div >
               {
                 this.renderPlayfield(this.state.playfieldData)
               }
              </div>
          );
      }
-
 }
-
-
-
-//-----------------OLD_COMPONENT____________________
-
-//   function getRandomCellIndex(arr){
-//     let newArr=[]
-//     arr.forEach((item, i)=> {if(item === '0'){ newArr.push(i)} })
-//     let index = newArr[Math.floor(Math.random()*newArr.length)];
-//     return index
-//   }
-//
-//
-//
-// //
-//   function activator(arr, delay){
-//
-// let cells = state.cells.slice();
-//   let timerId = setTimeout(function go() {
-//        const index = getRandomCellIndex(arr)
-//        console.log('INDEX ' + index);
-//         // cells = state.cells.slice();
-//        console.log(cells);
-//        cells[index] = '1';
-//        console.log(cells);
-//        console.log('----------------------------------');
-//        setState({cells: cells});
-//        timerId =  setTimeout(go, delay)
-//   }, delay)
-//
-// }
-// console.log('___________-NEW RENDER______________________');
-//   if(props.status){
-//     activator(state.cells, props.delay);
-//   }

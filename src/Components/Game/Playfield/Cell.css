@@ -3,7 +3,7 @@
   clear: both;
   content: "";
   display: table;
-  min-width: 675px ;
+  /* min-width: 675px ; */
 }
 .cell-def {
   background: #7b7b7b;
@@ -25,8 +25,12 @@
   background: #00cc00;
 }
 .failed-cell{
-  background: #ff3300
-;
+  background: #ff3300;
+}
+
+
+.game-over:{
+  background: rgba(0,0,0,0.75);
 }
 /*-----------------------------------------------------
 *,
