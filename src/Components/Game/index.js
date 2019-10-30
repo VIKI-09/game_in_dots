@@ -36,11 +36,12 @@ export default props =>{
   }
 
   function handleClick(){
-    setState({
-      field: 3,
-      delay: 5000,
-     isPlaying: true,
-     winner:''})
+    let newState = state;
+    console.log(newState);
+    newState.isPlaying = !state.isPlaying;
+    setState(newState)
+    console.log(newState);
+    console.log(state);
   }
 
   return (<Grid container>
@@ -53,7 +54,7 @@ export default props =>{
 
         </Grid >
         <Grid item xs={12}  >
-            <Playfield isPlaying={false} gameData={{field: 3, delay: 3000}} />
+            <Playfield status={state.isPlaying} gameData={{field: 5, delay: 3000}} />
         </Grid >
         </div>
       </Grid>

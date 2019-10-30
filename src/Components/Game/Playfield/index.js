@@ -4,15 +4,24 @@ import Cell from './Cell'
 import Grid from '@material-ui/core/Grid';
 
 export default class extends Component  {
+  constructor(props){
+    super(props);
+console.log(props.status);
 
+    if(true){
+
+      console.log('START_________________________-');
+      setTimeout(() =>this.cellActivator(this.props.gameData.delay),this.props.gameData.delay)
+    }
+  }
   state= {
     playfieldData: this.initPlayfieldData(this.props.gameData.field),
-    gameStatus: this.props.isPlaying,
     scoreCounter: {
       user: 0,
       computer: 0
     }
   };
+
 
   initPlayfieldData(field){
  let data = [];
@@ -55,27 +64,30 @@ export default class extends Component  {
     )
      }
 
+
    cellActivator(delay){
-     setTimeout(()=> {
+     // setTimeout(()=> {
+
         let currentCell = this.getRandomCell(this.state.playfieldData, this.props.gameData.field);
+        console.log('------------INDEX OF CURRENT CELL-' + currentCell)
         let timerId = setTimeout(()=>{
-          if(this.state.playfieldData === 'green'){
-            clearTimeout(timerId);
+          if(this.state.playfieldData[currentCell[0]][currentCell[1]].value === 'green'){
+            console.log('проверка на GREEEN' );
+            // clearTimeout(timerId);
             this.cellActivator(delay);
-            return;
+
           }else{
             let updData = this.state.playfieldData;
             updData[currentCell[0]][currentCell[1]].value = 'red';
             this.setState({playfieldData: updData})
+            setTimeout (()=>this.cellActivator(delay), delay);
           }
         },delay)
 
-      },delay);
+      // },delay);
 
     }
-    if(gameStatus){
-      this.cellActivator(this.props.gameData.delay)
-    }
+
   getRandNumb(limit){
     return Math.floor((Math.random() * 1000) + 1) % limit;
   }
@@ -90,7 +102,7 @@ export default class extends Component  {
       this.setState({playfieldData: updData})
       return [randomX, randomY];
     }else {
-        this.getRandomCellIndex(data, field)
+        this.getRandomCell(data, field)
       }
     }
 

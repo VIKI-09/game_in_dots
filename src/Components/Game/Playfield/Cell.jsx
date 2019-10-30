@@ -15,7 +15,7 @@ export default function Cell(props) {
 
   return (
     <div
-      onClick={ value === 'default'? onClick : null}
+      onClick={ value === 'active'? onClick : null}
       className={classes.join(' ')}
     >
     </div>
