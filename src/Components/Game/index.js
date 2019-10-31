@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import Grid from '@material-ui/core/Grid';
-// import Paper from '@material-ui/core/Paper';
 import ControlPanel from './ControlPanel';
 import Playfield from './Playfield';
 import WinnersList from './WinnersList';
+import Typography from '@material-ui/core/Typography'
 
-// import axios from 'axios';
+import axios from 'axios';
 
 const API_URL = 'http://starnavi-frontend-test-task.herokuapp.com';
 
@@ -15,8 +15,9 @@ export default class Game extends Component  {
     super(props)
     this.state = {
       isLoading: true,
-      playfieldData: this.initPlayfieldData(10),
-      delay: 2000,
+      gameModePresets: null,
+      playfieldData: null,
+      delay: null,
       gameMode:{},
       userName: null,
       winner: null,
@@ -28,15 +29,34 @@ export default class Game extends Component  {
     }
     this.handleStartClick = this.handleStartClick.bind(this);
     this.handleCellClick = this.handleCellClick.bind(this);
-    // if(true){
-    //
-    // };
+    this.setUser = this.setUser.bind(this);
+    this.setGameMode = this.setGameMode.bind(this);
+
+
+
+
   }
 
 
+  getDate (){
+    let date = new Date();
+    let options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+   return date.toLocaleString("en-US", options)
+  }
 
-
-
+  setWinner(){
+    axios.post(`${API_URL}/winners`, {winner:this.state.winner, date: this.getDate()})
+     .then(res =>{
+       console.log(res);
+       console.log(res.data);
+     })
+  }
 
   setUser(user){
     let updData = this.state;
@@ -49,18 +69,17 @@ export default class Game extends Component  {
   updData.playfieldData = this.initPlayfieldData(gameModePreset.field);
   updData.delay = gameModePreset.delay
   this.setState(updData)
-}
+  }
 
   handleStartClick(){
-console.log('Playing Button Clicked!');
   let updState = this.state;
   updState.isPlaying = true;
   this.setState(updState);
     setTimeout(() =>this.cellActivator(this.state.delay),this.state.delay)
 
-}
+  }
 
-    initPlayfieldData(field){
+  initPlayfieldData(field){
  let data = [];
  for (let i = 0; i < field; i++) {
      data.push([]);
@@ -148,6 +167,17 @@ console.log('Playing Button Clicked!');
       }
     }
 
+    componentDidMount() {
+    axios.get(`${API_URL}/game-settings`)
+      .then(res => {
+            const data = res.data;
+            let modes = Object.entries(data);
+            let updData = this.state;
+            updData.gameModePresets = modes;
+            this.setState(updData);
+      })
+  }
+
    render() {
      return (
    <Grid container >
@@ -155,13 +185,13 @@ console.log('Playing Button Clicked!');
            <Grid container >
                    <Grid item xs={12}>
                    <div style={{margin: '50px', minWidth: '675px', justifyContent:'center'}} >
-                       <ControlPanel apiUrl={API_URL} onToggle={this.handleStartClick} userName={this.setUser}  />
-                           {this.state.winner ? <span>{this.state.winner}</span>: null}
+                       {this.state.gameModePresets ? <ControlPanel apiUrl={API_URL} onToggle={this.handleStartClick} userName={this.setUser} gameModePresets={this.state.gameModePresets} setGameMode={this.setGameMode} /> : null}
+                           {this.state.winner ? <Typography color='textSecondary' variant='h3' align='center'>{this.state.winner} win!</Typography   >: null}
                      </div>
                    </Grid >
 
                    <Grid item xs={12} >
-                     {true? (
+                     {this.state.playfieldData ? (
                          <div style={{margin:'10px', minWidth: '675px', alignItems: 'center', justifyContent:'center', display:'flex'}}>
                              <Playfield onClick={this.handleCellClick}  data={this.state.playfieldData} />
                          </div>): null}

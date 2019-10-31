@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import { makeStyles } from '@material-ui/core/styles'
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -19,52 +19,36 @@ const useStyles = makeStyles(theme => ({
 
 
 export default props => {
-  const classes = useStyles();
-
-  useEffect(()=>{ axios.get(`${props.api}/game-settings`)
-      .then(res => {
-        const gameModePresets = res.data;
-        // setLoading(false);
-      })
-    }, [])
 
 
-
-  const [values, setValues] = React.useState({
-     age: '',
-     name: 'hai',
-   });
+    const classes = useStyles();
   const inputLabel = React.useRef(null);
   const [labelWidth, setLabelWidth] = React.useState(0);
-  React.useEffect(() => {
+  useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
   const handleChange = event => {
-     setValues(oldValues => ({
-       ...oldValues,
-       [event.target.name]: event.target.value,
-     }));
+   props.setMode(event.target.value)
    };
    return(
      <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel ref={inputLabel} htmlFor="Game Mode">
+      <InputLabel focused={false}  ref={inputLabel}>
         Game Mode
       </InputLabel>
       <Select
-        value={values}
+
+        value={props.gameModesData}
         onChange={handleChange}
         labelWidth={labelWidth}
       >
-      <MenuItem value="hai">Hai</MenuItem>
-        <MenuItem value="olivier">Olivier</MenuItem>
-        <MenuItem value="kevin">Kevin</MenuItem>
+      {props.gameModesData.map((mode)=> {
+        return(
+          <MenuItem  value={mode[1]}>{mode[0]}</MenuItem>
+        )
+      })}
       </Select>
     </FormControl>
    )
 }
-// {modes.map((mode)=> {
-//   return(
-//     <MenuItem value={mode}>{mode}</MenuItem>
-//   )
-// })}
+//

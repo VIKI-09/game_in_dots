@@ -7,7 +7,7 @@ export default props =>
   // <Paper>
       <FormGroup row>
         <UserNameForm setName={props.userName} />
-        <DifficultyMenu api={props.apiUrl} modes={props.gameModePresets}  />
+        <DifficultyMenu api={props.apiUrl} gameModesData={props.gameModePresets} setMode={props.setGameMode}  />
         <PlayButton  onClick={props.onToggle} />
      </FormGroup>
   // </Paper>
