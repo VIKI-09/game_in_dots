@@ -62,10 +62,10 @@ export default class Game extends Component  {
   reset(){
     let resetedState = this.state
     resetedState.winner = null
-    resetedState.isPlaying = null
+    resetedState.isPlaying = false
     resetedState.scoreCounter.user = 0
     resetedState.scoreCounter.computer = 0
-    resetedState.playfieldData = this.initPlayfieldData(this.field);
+    resetedState.playfieldData = this.initPlayfieldData(this.state.field);
 
     this.setState(resetedState)
   }
@@ -139,7 +139,7 @@ export default class Game extends Component  {
      }
 
   cellActivator(delay){
-     // setTimeout(()=> {
+     setTimeout(()=> {
         if (!this.state.isPlaying){
           return;
         }
@@ -169,7 +169,7 @@ export default class Game extends Component  {
           this.cellActivator(delay)
         },delay)
 
-      // },delay);
+      },delay);
 
     }
 
