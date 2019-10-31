@@ -139,7 +139,7 @@ export default class Game extends Component  {
      }
 
   cellActivator(delay){
-     setTimeout(()=> {
+     // setTimeout(()=> {
         if (!this.state.isPlaying){
           return;
         }
@@ -169,7 +169,7 @@ export default class Game extends Component  {
           this.cellActivator(delay)
         },delay)
 
-      },delay);
+      // },delay);
 
     }
 
