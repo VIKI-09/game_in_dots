@@ -65,6 +65,8 @@ export default class Game extends Component  {
     resetedState.isPlaying = null
     resetedState.scoreCounter.user = 0
     resetedState.scoreCounter.computer = 0
+    resetedState.playfieldData = this.initPlayfieldData(this.field);
+
     this.setState(resetedState)
   }
 
