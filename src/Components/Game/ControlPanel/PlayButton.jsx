@@ -13,8 +13,8 @@ export default props => {
   const classes = useStyles();
 
   return(
-    <Button variant="contained" color="primary" className={classes.button}
+    <Button disabled={!props.status.activator || props.status.isPlaying} variant="contained" color="primary" className={classes.button}
     onClick={props.onClick}>
-        Play
+        {props.status.label ? 'Play Again' :  'Play'}
       </Button>)
 }

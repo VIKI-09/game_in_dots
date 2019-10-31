@@ -33,7 +33,7 @@ export default props => {
    };
    return(
      <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel focused={false}  ref={inputLabel}>
+      <InputLabel required={true} ref={inputLabel}>
         Game Mode
       </InputLabel>
       <Select
@@ -44,7 +44,7 @@ export default props => {
       >
       {props.gameModesData.map((mode)=> {
         return(
-          <MenuItem  value={mode[1]}>{mode[0]}</MenuItem>
+          <MenuItem key={mode[0]}  value={mode[1]}>{mode[0]}</MenuItem>
         )
       })}
       </Select>

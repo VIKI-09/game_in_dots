@@ -14,12 +14,11 @@ export default class Game extends Component  {
   constructor(props){
     super(props)
     this.state = {
-      isLoading: true,
       gameModePresets: null,
       playfieldData: null,
       delay: null,
-      gameMode:{},
-      userName: null,
+      field: null,
+      userName: 'User',
       winner: null,
       isPlaying: false,
       scoreCounter: {
@@ -31,12 +30,43 @@ export default class Game extends Component  {
     this.handleCellClick = this.handleCellClick.bind(this);
     this.setUser = this.setUser.bind(this);
     this.setGameMode = this.setGameMode.bind(this);
+}
 
 
 
 
+ checkWin(){
+   if(this.state.scoreCounter.computer > this.getFiftyPer(this.state.field)){
+     this.endGame('Computer')
+   } else if(this.state.scoreCounter.user > this.getFiftyPer(this.state.field)){
+     this.endGame(this.state.userName)
+   }else return
+ }
+
+
+
+  getFiftyPer(field){
+      let result = field * field / 2;
+      return result
   }
 
+  endGame(winner){
+    console.log('-_____----____---END GAME-----_-__----____-');
+    let updData = this.state
+    updData.winner = winner;
+    updData.isPlaying = false;
+    this.setState(updData)
+    this.setWinner();
+  }
+
+  reset(){
+    let resetedState = this.state
+    resetedState.winner = null
+    resetedState.isPlaying = null
+    resetedState.scoreCounter.user = 0
+    resetedState.scoreCounter.computer = 0
+    this.setState(resetedState)
+  }
 
   getDate (){
     let date = new Date();
@@ -68,10 +98,14 @@ export default class Game extends Component  {
   let updData = this.state
   updData.playfieldData = this.initPlayfieldData(gameModePreset.field);
   updData.delay = gameModePreset.delay
+  updData.field = gameModePreset.field
   this.setState(updData)
   }
 
   handleStartClick(){
+    if(this.state.winner){
+      this.reset()
+    }
   let updState = this.state;
   updState.isPlaying = true;
   this.setState(updState);
@@ -94,24 +128,6 @@ export default class Game extends Component  {
     return data;
   };
 
-  // renderPlayfield(data){
-  //    return (
-  //      data.map((datarow) =>
-  //      <div  className='playfield-row' key={data.indexOf(datarow)}>
-  //         {
-  //              datarow.map((dataitem) =>
-  //                 <Cell
-  //                       key={dataitem.x * datarow.length + dataitem.y}
-  //                       onClick={() =>this.handleClick(dataitem.x, dataitem.y)}
-  //                       value={dataitem.value}
-  //                      />
-  //                )
-  //              }
-  //              </div>
-  //              )
-  //            )
-  //  }
-
   handleCellClick(x, y) {
     let updatedData = this.state.playfieldData;
     updatedData[x][y].value = 'green';
@@ -122,8 +138,10 @@ export default class Game extends Component  {
 
   cellActivator(delay){
      // setTimeout(()=> {
-
-        let currentCell =  this.getRandomCell(this.state.playfieldData, 10);
+        if (!this.state.isPlaying){
+          return;
+        }
+        let currentCell =  this.getRandomCell(this.state.playfieldData, this.state.field);
 
         console.log('------------INDEX OF CURRENT CELL-' + currentCell)
         let timerId = setTimeout(()=>{
@@ -131,14 +149,20 @@ export default class Game extends Component  {
             console.log('проверка на GREEEN' );
             clearTimeout(timerId);
             console.log(timerId);
+            let updData = this.state;
+            updData.scoreCounter.user++
+            this.setState(updData)
+
             // setTimeout (()=>this.cellActivator(delay),delay );
 
           }else{
-            let updData = this.state.playfieldData;
-            updData[currentCell[0]][currentCell[1]].value = 'red';
-            this.setState({playfieldData: updData})
+            let updData = this.state;
+            updData.playfieldData[currentCell[0]][currentCell[1]].value = 'red';
+            updData.scoreCounter.computer++
+            this.setState(updData)
             // setTimeout (()=>this.cellActivator(delay), delay);
           }
+          this.checkWin();
           // setTimeout (()=>this.cellActivator(delay), delay)
           this.cellActivator(delay)
         },delay)
@@ -172,9 +196,9 @@ export default class Game extends Component  {
       .then(res => {
             const data = res.data;
             let modes = Object.entries(data);
-            let updData = this.state;
-            updData.gameModePresets = modes;
-            this.setState(updData);
+            let updData = this.state.gameModePresets;
+            updData = modes;
+            this.setState({gameModePresets:updData});
       })
   }
 
@@ -185,7 +209,7 @@ export default class Game extends Component  {
            <Grid container >
                    <Grid item xs={12}>
                    <div style={{margin: '50px', minWidth: '675px', justifyContent:'center'}} >
-                       {this.state.gameModePresets ? <ControlPanel apiUrl={API_URL} onToggle={this.handleStartClick} userName={this.setUser} gameModePresets={this.state.gameModePresets} setGameMode={this.setGameMode} /> : null}
+                       {this.state.gameModePresets ? <ControlPanel apiUrl={API_URL} onToggle={this.handleStartClick} userName={this.setUser} gameModePresets={this.state.gameModePresets} setGameMode={this.setGameMode} status={{label: this.state.winner, activator: this.state.playfieldData, isPlaying: this.state.isPlaying }} /> : null}
                            {this.state.winner ? <Typography color='textSecondary' variant='h3' align='center'>{this.state.winner} win!</Typography   >: null}
                      </div>
                    </Grid >
