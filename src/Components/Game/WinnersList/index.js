@@ -7,13 +7,14 @@ import axios from 'axios';
 export default props => {
 
   const [winners, setWinnersList] = useState([]);
-
+  const API = props.api;
   useEffect(() => {
-    axios.get(`${props.api}/winners`)
+    setInterval(()=>{
+      axios.get(`${API}/winners`)
     .then(res => {
       const winnersData = res.data;
       setWinnersList(winnersData);
-    })
+    })}, 5000)
   }, []);
 
   return(<Fragment>
