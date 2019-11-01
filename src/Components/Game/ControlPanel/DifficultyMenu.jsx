@@ -23,28 +23,31 @@ export default props => {
 
     const classes = useStyles();
   const inputLabel = React.useRef(null);
-  const [labelWidth, setLabelWidth] = React.useState(0);
+  const [labelWidth, setLabelWidth] = useState(0);
+  const [values, setValue] = useState('')
+
   useEffect(() => {
     setLabelWidth(inputLabel.current.offsetWidth);
   }, []);
 
   const handleChange = event => {
    props.setMode(event.target.value)
+   setValue(event.target.label)
    };
    return(
-     <FormControl variant="outlined" className={classes.formControl}>
-      <InputLabel required={true} ref={inputLabel}>
+     <FormControl disabled={props.isPlaying} variant="outlined" className={classes.formControl}>
+      <InputLabel id='select-mode' ref={inputLabel}>
         Game Mode
       </InputLabel>
       <Select
-
-        value={props.gameModesData}
+        labelid='select-mode'
+        value={values}
         onChange={handleChange}
         labelWidth={labelWidth}
       >
       {props.gameModesData.map((mode)=> {
         return(
-          <MenuItem key={mode[0]}  value={mode[1]}>{mode[0]}</MenuItem>
+          <MenuItem key={mode[0]} label={mode[0]}  value={mode[1]}>{mode[0]}</MenuItem>
         )
       })}
       </Select>
